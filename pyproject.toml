@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "FastAPI_hw12"
+version = "0.1.0"
+description = ""
+authors = ["Serg <onyserh@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+black = "^24.3.0"
+fastapi = "^0.110.0"
+uvicorn = "^0.29.0"
+sqlalchemy = "^2.0.29"
+psycopg2 = "^2.9.9"
+alembic = "^1.13.1"
+asyncpg = "^0.29.0"
+python-dotenv = "^1.0.1"
+pydantic = {extras = ["email"], version = "^2.6.4"}
+python-multipart = "^0.0.9"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+libgravatar = "^1.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
