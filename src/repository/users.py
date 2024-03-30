@@ -15,19 +15,23 @@ async def get_user_by_email(email: str, db: AsyncSession = Depends(get_db)):
     return user
 
 
-async def create_user(body: UserSchema, db: AsyncSession = Depends(get_db)):
-    avatar = None
-    try:
-        g = Gravatar(body.email)
-        avatar = g.get_image()
-    except Exception as err:
-        print(err)
-
-    new_user = User(**body.model_dump(), avatar=avatar)
-    db.add(new_user)
-    await db.commit()
-    await db.refresh(new_user)
-    return new_user
+async def create_user(body: UserSchema | dict, db: AsyncSession = Depends(get_db), avatar=None):
+    new_user = None
+    if not avatar:
+        try:
+            g = Gravatar(body.email)
+            avatar = g.get_image()
+        except Exception as err:
+            print(err)
+    if isinstance(body, UserSchema):
+        new_user = User(**body.model_dump(), avatar=avatar)
+    elif isinstance(body, dict):
+        new_user = User(**body, avatar=avatar)
+    if new_user:
+        db.add(new_user)
+        await db.commit()
+        await db.refresh(new_user)
+        return new_user
 
 
 async def update_token(user: User, token: str | None, db: AsyncSession):

@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Path, Query, Security
+from fastapi import APIRouter, Depends, HTTPException, status, Path, Query, Security, Request
 from fastapi.security import (
     OAuth2PasswordRequestForm,
     HTTPAuthorizationCredentials,
     HTTPBearer,
 )
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 from src.database.db import get_db
 from src.repository import users as repositories_users
@@ -14,6 +16,7 @@ from src.services.auth import auth_service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 get_refresh_token = HTTPBearer()
+templates = Jinja2Templates(directory="src/templates")
 
 
 @router.post(
@@ -78,3 +81,15 @@ async def refresh_token(
         "refresh_token": refresh_token,
         "token_type": "bearer",
     }
+
+
+@router.get("/signup_page", response_class=HTMLResponse)
+async def signup_page(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="signup.html", context={})
+
+
+@router.get("/login_page", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="login.html", context={})
