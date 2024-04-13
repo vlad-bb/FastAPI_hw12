@@ -8,6 +8,10 @@ PASSWORD = regdata["PASSWORD"]
 DB_NAME = regdata["DB_NAME"]
 HOST = regdata["HOST"]
 PORT = regdata["PORT"]
+TG_TOKEN = regdata["TG_TOKEN"]
+WEBHOOK_URL = regdata["WEBHOOK_URL"]
+WEBAPP_URL = regdata["WEBAPP_URL"]
+MONO_TOKEN = regdata["MONO_TOKEN"]
 
 
 class Config:
