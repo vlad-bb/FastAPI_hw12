@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class ShopData(BaseModel):
     products: list
     totalPrice: float
-    # user_id: int  # todo when React will be ready to send user_id
+    # queryId: any  # todo when React will be ready to send user_id
 
 
 class PaymentRequest(BaseModel):

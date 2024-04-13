@@ -13,6 +13,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Dict, Any
 
 from src.handlers.oauth_handler import on_auth
 from src.conf.oauth_config import oauth2_config
@@ -55,7 +56,7 @@ app.include_router(payment.router)
 app.add_middleware(OAuth2Middleware, config=oauth2_config, callback=on_auth)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=['https://api.monobank.ua', 'https://web-shop-tg.netlify.app'],
     allow_credentials=True,
     allow_methods=["POST", "GET", "OPTIONS"],
     allow_headers=["*"],
@@ -114,7 +115,7 @@ async def healthchecker(db: AsyncSession = Depends(get_db)):
 
 
 @app.post("/web-data")
-async def handle_web_data(request: ShopData):
+async def handle_web_data(request: Dict[Any, Any]):  # ShopData):
     print("Start func handle_web_data")
     data = request
     print('Data:', data)
